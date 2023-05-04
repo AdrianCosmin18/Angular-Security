@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Book} from "../../models/book";
 import {BookService} from "../../service/book.service";
 import {HttpErrorResponse} from "@angular/common/http";
-import {MegaMenuItem, MessageService} from "primeng/api";
+import {MessageService} from "primeng/api";
 import {Constants} from "../../models/constants";
 
 @Component({
@@ -13,7 +13,6 @@ import {Constants} from "../../models/constants";
 })
 export class HomeComponent implements OnInit {
   public books: Book[] = [];
-  public items!: MegaMenuItem[];
   public message: Constants = Constants.ADD;
 
 
@@ -21,22 +20,6 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllBooks();
-    this.initItems();
-  }
-
-  initItems(){
-    this.items = [
-      {
-        label: 'Available books',
-        icon: 'pi pi-fw pi-book',
-        url: 'home'
-      },
-      {
-        label: 'My books',
-        icon: 'pi pi-fw pi-user',
-        url: 'myBooks'
-      }
-    ]
   }
 
 
