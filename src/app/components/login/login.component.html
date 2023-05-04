@@ -1,0 +1,23 @@
+<section>
+  <h3>Login</h3>
+
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit($event)">
+
+    <div class="p-inputgroup">
+      <span class="p-inputgroup-addon">@</span>
+      <input type="text" pInputText placeholder="email" formControlName="email">
+    </div>
+
+    <div class="p-inputgroup">
+      <span class="p-inputgroup-addon">Password</span>
+      <input type="password" pInputText formControlName="password">
+    </div>
+
+    <article class="button-group">
+      <button pButton pRipple label="Login" (click)="onSubmit($event)"></button>
+      <button pButton pRipple label="Go to register"
+              (click)="goToRegister()"></button>
+    </article>
+  </form>
+
+</section>

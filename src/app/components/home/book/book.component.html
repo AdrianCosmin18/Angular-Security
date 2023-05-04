@@ -1,0 +1,11 @@
+<td>{{book.id}}</td>
+<td>{{book.name}}</td>
+<td>{{book.author}}</td>
+<td>{{book.numberOfPages}}</td>
+<td *ngIf="type === 'Add'">
+  <p-button label="{{type}}" (click)="addBookToUser()"></p-button>
+</td>
+
+<td *ngIf="type === 'Return'">
+  <p-button label="{{type}}" (click)="returnBookFromUser()"></p-button>
+</td>

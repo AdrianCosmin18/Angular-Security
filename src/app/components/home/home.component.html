@@ -1,0 +1,30 @@
+<p-megaMenu [model]="items"></p-megaMenu>
+
+
+<h1>All available books</h1>
+<!--<button (click)="goToAddCar()">Create New Car</button>-->
+<table>
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Title</th>
+    <th>Author</th>
+    <th>Number of pages</th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr class="book"
+        *ngFor="let book of books"
+        [book]="book" [type]="message"
+        (addBookById)="addBookToUser($event)"
+    ></tr>
+  </tbody>
+
+<!--  <button type="button"-->
+<!--          class="btn btn-primary"-->
+<!--          (click)="onClick()"-->
+<!--          style="margin-top: 20px;"-->
+<!--  >Show</button>-->
+</table>
+
+<p-toast position="top-right"></p-toast>

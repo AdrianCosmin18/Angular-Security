@@ -1,0 +1,41 @@
+
+
+
+<section>
+  <h3>Registration</h3>
+
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit($event)">
+
+    <div class="p-inputgroup">
+      <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
+      <input type="text" pInputText placeholder="Username" formControlName="userName">
+    </div>
+
+    <div class="p-inputgroup">
+      <span class="p-inputgroup-addon">@</span>
+      <input type="text" pInputText placeholder="email" formControlName="email">
+    </div>
+
+    <div class="p-inputgroup">
+      <span class="p-inputgroup-addon">Phone</span>
+      <input type="text" pInputText placeholder="phone" formControlName="phone">
+    </div>
+
+    <div class="p-inputgroup">
+      <span class="p-inputgroup-addon">Password</span>
+      <input type="password" pInputText formControlName="password">
+    </div>
+
+    <article class="button-group">
+      <button pButton pRipple label="Register"
+              (click)="onSubmit($event)"
+              [disabled]="registerForm.invalid"></button>
+
+      <button pButton pRipple label="Go to login"
+              (click)="goToLogin()"></button>
+    </article>
+
+  </form>
+
+</section>
+
