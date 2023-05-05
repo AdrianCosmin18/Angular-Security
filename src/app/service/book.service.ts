@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {catchError, Observable, pipe, throwError} from "rxjs";
 import {Book} from "../models/book";
+import {UserService} from "./user.service";
 
 @Injectable({
   providedIn: 'root'
@@ -9,9 +10,8 @@ import {Book} from "../models/book";
 export class BookService {
   public baseBooksUrl = "http://localhost:8080/api/books";
   public baseUserUrl = "http://localhost:8080/user";
-  public email = "cosmin@yahoo.com"
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getBooks():Observable<Book[]>{
     return this.http.get<Book[]>(this.baseBooksUrl)
@@ -24,14 +24,14 @@ export class BookService {
       .pipe(catchError(this.handleError));
   }
 
-  addBookToUser(bookId: number): Observable<void>{
-    const url = `${this.baseBooksUrl}/add-book-to-user/${this.email}?bookId=${bookId}`;
+  addBookToUser(email: string, bookId: number): Observable<void>{
+    const url = `${this.baseBooksUrl}/add-book-to-user/${email}?bookId=${bookId}`;
     return this.http.get<void>(url)
       .pipe(catchError(this.handleError));
   }
 
   removeBookFromUser(email: string, bookId: number): Observable<void>{
-    const url = `${this.baseBooksUrl}/remove-book-from-user/${this.email}?bookId=${bookId}`;
+    const url = `${this.baseBooksUrl}/remove-book-from-user/${email}?bookId=${bookId}`;
     return this.http.get<void>(url)
       .pipe(catchError(this.handleError));
   }

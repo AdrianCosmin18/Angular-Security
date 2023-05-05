@@ -21,14 +21,16 @@ export class RegisterComponent implements OnInit {
 
   initForm(){
     this.registerForm = this.formBuilder.group({
-      userName: ['', Validators.required, Validators.minLength(4)],
-      email: ['', Validators.required, Validators.email],
+      userName: ['', Validators.required],
+      email: ['', [Validators.required]],
       phone: ['', [Validators.required]],
-      password: ['', [Validators.required, Validators.minLength(5)]]
+      password: ['', [Validators.required]]
+    },{
+      updateOn: 'change'
     })
   }
 
-  onSubmit(event: Event){
+  registerUser(){
     let user: User = {
       name: this.registerForm.get("userName")?.value,
       email: this.registerForm.get("email")?.value,
@@ -37,12 +39,15 @@ export class RegisterComponent implements OnInit {
     }
 
     this.service.register(user).subscribe({
-      next: response => {
+      next: value => {
         // const resp = response as AuthenticationResponse;
-        if(response.body?.email === user.email){
+        if(value.body?.email === user.email){
           alert("Success authentication, now you have to login");
-          this.router.navigate(['/login']);
-          this.service.saveToken(response.body.token);
+          this.router.navigate(['/home']);
+          this.service.saveToken(value.body.token);
+
+          console.log("aici");
+          this.service.loadAuthenticationDetails({email: value.body!.email, token: value.body!.token});
         }
       },
       error: err => {

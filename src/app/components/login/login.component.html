@@ -1,7 +1,7 @@
 <section>
   <h3>Login</h3>
 
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit($event)">
+  <form [formGroup]="loginForm">
 
     <div class="p-inputgroup">
       <span class="p-inputgroup-addon">@</span>
@@ -14,7 +14,7 @@
     </div>
 
     <article class="button-group">
-      <button pButton pRipple label="Login" (click)="onSubmit($event)"></button>
+      <button pButton pRipple label="Login" (click)="login()"></button>
       <button pButton pRipple label="Go to register"
               (click)="goToRegister()"></button>
     </article>

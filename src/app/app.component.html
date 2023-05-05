@@ -1,2 +1,2 @@
-<p-megaMenu [model]="items"></p-megaMenu>
+<p-megaMenu *ngIf="hasNotRoute('/login') && hasNotRoute('/register')" [model]="items"></p-megaMenu>
 <router-outlet></router-outlet>

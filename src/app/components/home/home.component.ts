@@ -4,6 +4,7 @@ import {BookService} from "../../service/book.service";
 import {HttpErrorResponse} from "@angular/common/http";
 import {MessageService} from "primeng/api";
 import {Constants} from "../../models/constants";
+import {UserService} from "../../service/user.service";
 
 @Component({
   selector: 'app-home',
@@ -14,14 +15,25 @@ import {Constants} from "../../models/constants";
 export class HomeComponent implements OnInit {
   public books: Book[] = [];
   public message: Constants = Constants.ADD;
+  private email: string = '';
 
 
-  constructor(private bookService: BookService, private messageService: MessageService) { }
+  constructor(
+    private bookService: BookService,
+    private messageService: MessageService,
+    private userService: UserService) { }
 
   ngOnInit(): void {
     this.getAllBooks();
+    this.loadEmail();
   }
 
+  loadEmail(){
+    this.userService.subEmail.subscribe((data=>{
+      console.log(data);
+      this.email = data.email;
+    }));
+  }
 
   getAllBooks(){
     this.bookService.getAvailableBooks().subscribe({
@@ -37,7 +49,7 @@ export class HomeComponent implements OnInit {
 
   addBookToUser(bookId: number){
     console.log(bookId);
-    this.bookService.addBookToUser(bookId).subscribe({
+    this.bookService.addBookToUser(this.email, bookId).subscribe({
       next: () => {
         this.messageService.add({severity:'success', summary: 'Book added with success'});
       },

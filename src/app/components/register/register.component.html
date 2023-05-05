@@ -4,7 +4,7 @@
 <section>
   <h3>Registration</h3>
 
-  <form [formGroup]="registerForm" (ngSubmit)="onSubmit($event)">
+  <form [formGroup]="registerForm">
 
     <div class="p-inputgroup">
       <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
@@ -28,7 +28,7 @@
 
     <article class="button-group">
       <button pButton pRipple label="Register"
-              (click)="onSubmit($event)"
+              (click)="registerUser()"
               [disabled]="registerForm.invalid"></button>
 
       <button pButton pRipple label="Go to login"
