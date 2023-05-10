@@ -3,6 +3,8 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {User} from "../../models/user";
 import {UserService} from "../../service/user.service";
+import {AuthenticationDetails} from "../../models/authentication-details";
+import {Constants} from "../../models/constants";
 
 @Component({
   selector: 'app-login',
@@ -42,14 +44,22 @@ export class LoginComponent implements OnInit {
       next: value => {
         alert("Success login");
 
-        this.service.saveToken(value.body!.token);
+        const arrAuth = value.body?.authorities;
+        let role = '';
+        if(arrAuth?.some(auth => auth === Constants.ROLE_ADMIN)){ // problema aici
+          role = Constants.ROLE_ADMIN;
+        }else{
+          role = Constants.ROLE_USER;
+        }
 
-        console.log("aici");
-        this.service.loadAuthenticationDetails({email: value.body!.email, token: value.body!.token});
+        this.service.subAuth.next(<AuthenticationDetails>{email: value.body?.email, token: value.body?.token, role: role});
+        this.service.saveRole(role);
+        this.service.saveEmail(value.body!.email);
+        this.service.saveToken(value.body!.token);
         this.router.navigate(['/home']);
       },
       error: err => {
-        alert("Something went wrong");
+        alert(err);
       }
     })
   }

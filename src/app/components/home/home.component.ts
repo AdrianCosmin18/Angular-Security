@@ -24,14 +24,18 @@ export class HomeComponent implements OnInit {
     private userService: UserService) { }
 
   ngOnInit(): void {
-    this.getAllBooks();
     this.loadEmail();
+    this.getAllBooks();
   }
 
   loadEmail(){
-    this.userService.subEmail.subscribe((data=>{
+    this.userService.subAuth.subscribe((data=>{
       console.log(data);
       this.email = data.email;
+      if(!this.email){
+        // @ts-ignore
+        this.email = localStorage.getItem("email");
+      }
     }));
   }
 
@@ -52,6 +56,7 @@ export class HomeComponent implements OnInit {
     this.bookService.addBookToUser(this.email, bookId).subscribe({
       next: () => {
         this.messageService.add({severity:'success', summary: 'Book added with success'});
+        this.getAllBooks();
       },
       error: err => {
         this.messageService.add({severity:'error', summary: 'Something went wrong'});

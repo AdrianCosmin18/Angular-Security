@@ -25,14 +25,14 @@ export class BookService {
   }
 
   addBookToUser(email: string, bookId: number): Observable<void>{
-    const url = `${this.baseBooksUrl}/add-book-to-user/${email}?bookId=${bookId}`;
-    return this.http.get<void>(url)
+    const url = `${this.baseUserUrl}/add-book-to-user/${email}?bookId=${bookId}`;
+    return this.http.post<void>(url, null)
       .pipe(catchError(this.handleError));
   }
 
   removeBookFromUser(email: string, bookId: number): Observable<void>{
-    const url = `${this.baseBooksUrl}/remove-book-from-user/${email}?bookId=${bookId}`;
-    return this.http.get<void>(url)
+    const url = `${this.baseUserUrl}/remove-book-from-user/${email}?bookId=${bookId}`;
+    return this.http.delete<void>(url)
       .pipe(catchError(this.handleError));
   }
 
@@ -40,6 +40,11 @@ export class BookService {
     const url = `${this.baseUserUrl}/get-user-books/${email}`;
     console.log(url);
     return this.http.get<Book[]>(url)
+      .pipe(catchError(this.handleError));
+  }
+
+  createBook(book: Book): Observable<void>{
+    return this.http.post<void>(this.baseBooksUrl, book)
       .pipe(catchError(this.handleError));
   }
 

@@ -16,6 +16,9 @@ import {MegaMenuModule} from "primeng/megamenu";
 import {ToastModule} from "primeng/toast";
 import { UserBookComponent } from './components/home/user-book/user-book.component';
 import {AuthInterceptor} from "./interceptor/auth.interceptor";
+import { StateComponent } from './components/state/state.component';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import { CreateBookComponent } from './components/create-book/create-book.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +27,9 @@ import {AuthInterceptor} from "./interceptor/auth.interceptor";
     LoginComponent,
     HomeComponent,
     BookComponent,
-    UserBookComponent
+    UserBookComponent,
+    StateComponent,
+    CreateBookComponent
   ],
     imports: [
         BrowserModule,
@@ -35,7 +40,8 @@ import {AuthInterceptor} from "./interceptor/auth.interceptor";
         RippleModule,
         TabMenuModule,
         MegaMenuModule,
-        ToastModule
+        ToastModule,
+        BrowserAnimationsModule
     ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass:AuthInterceptor, multi: true}

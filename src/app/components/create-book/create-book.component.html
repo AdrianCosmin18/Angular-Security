@@ -1,0 +1,30 @@
+<section>
+  <h3>Create new book</h3>
+
+  <form [formGroup]="bookForm">
+
+    <div class="p-inputgroup">
+      <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
+      <input type="text" pInputText placeholder="Book Title" formControlName="name">
+    </div>
+
+    <div class="p-inputgroup">
+      <span class="p-inputgroup-addon">@</span>
+      <input type="text" pInputText placeholder="Author name" formControlName="author">
+    </div>
+
+    <div class="p-inputgroup">
+      <span class="p-inputgroup-addon">Number of pages</span>
+      <input type="number" pInputText placeholder="pages" formControlName="numberOfPages">
+    </div>
+
+    <article class="button-group">
+      <button pButton pRipple label="Create book"
+              (click)="createNewBook()"
+              [disabled]="bookForm.invalid"></button>
+    </article>
+
+  </form>
+
+</section>
+<p-toast position="top-right"></p-toast>

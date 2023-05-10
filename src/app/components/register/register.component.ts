@@ -4,6 +4,8 @@ import {UserService} from "../../service/user.service";
 import {User} from "../../models/user";
 import {Router} from "@angular/router";
 import {AuthenticationResponse} from "../../models/authentication-response";
+import {AuthenticationDetails} from "../../models/authentication-details";
+import {Constants} from "../../models/constants";
 
 @Component({
   selector: 'app-register',
@@ -43,11 +45,23 @@ export class RegisterComponent implements OnInit {
         // const resp = response as AuthenticationResponse;
         if(value.body?.email === user.email){
           alert("Success authentication, now you have to login");
-          this.router.navigate(['/home']);
-          this.service.saveToken(value.body.token);
 
-          console.log("aici");
-          this.service.loadAuthenticationDetails({email: value.body!.email, token: value.body!.token});
+          const arrAuth = value.body?.authorities;
+          let role = '';
+          if(arrAuth?.some(auth => auth === Constants.ROLE_ADMIN)){
+            role = Constants.ROLE_ADMIN;
+          }else{
+            role = Constants.ROLE_USER;
+          }
+
+          this.service.subAuth.next(<AuthenticationDetails>{email: value.body?.email, token: value.body?.token, role: role});
+
+
+          this.service.saveToken(value.body.token);
+          this.service.saveEmail(value.body.email);
+          this.service.saveRole(role);
+          this.service.subAuth.next(<AuthenticationDetails>{email: value.body?.email, token: value.body?.token});
+          this.router.navigate(['/home']);
         }
       },
       error: err => {

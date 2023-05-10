@@ -5,4 +5,5 @@ export interface AuthenticationResponse extends HttpResponse<AuthenticationRespo
   userId: number;
   email: string;
   token: string;
+  authorities: Array<string>;
 }

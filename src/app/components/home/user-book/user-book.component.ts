@@ -22,15 +22,19 @@ export class UserBookComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.getMyBooks();
     this.loadEmail();
+    this.getMyBooks();
   }
 
   loadEmail(){
-    this.userService.subEmail.subscribe({
+    this.userService.subAuth.subscribe({
       next: value => {
         this.email = value.email;
         console.log(this.email);
+        if(!this.email){
+          // @ts-ignore
+          this.email = localStorage.getItem("email");
+        }
       }
     });
   }
@@ -50,6 +54,7 @@ export class UserBookComponent implements OnInit {
     this.bookService.removeBookFromUser(this.email, bookId).subscribe({
       next: () => {
         this.messageService.add({severity:'success', summary: 'Book returned with success'});
+        this.getMyBooks();
       },
       error: err => {
         this.messageService.add({severity:'error', summary: 'Something went wrong'});

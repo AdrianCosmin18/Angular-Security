@@ -13,6 +13,8 @@ export class BookComponent implements OnInit {
   @Output() addBookById = new EventEmitter<number>();
   @Output() returnBookById = new EventEmitter<number>();
 
+  public tooltipMessage: string = 'Edit book';
+
   constructor() { }
 
   ngOnInit(): void {

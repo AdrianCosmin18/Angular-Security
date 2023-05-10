@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import {BehaviorSubject, catchError, Observable, Subject, throwError} from "rxjs";
+import {BehaviorSubject, catchError, Observable, Subject, throwError,tap} from "rxjs";
 import {AuthenticationResponse} from "../models/authentication-response";
 import {HttpClient, HttpErrorResponse, HttpResponse} from "@angular/common/http";
 import {User} from "../models/user";
 import {AuthenticationDetails} from "../models/authentication-details";
+import {Constants} from "../models/constants";
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +13,11 @@ export class UserService {
   private registerUrl = "http://localhost:8080/user/register";
   private loginUrl = "http://localhost:8080/user/login";
 
-  public subEmail = new Subject<AuthenticationDetails>();
+  public subAuth = new BehaviorSubject<AuthenticationDetails>({email:'', token: '', role: Constants.ROLE_USER});
+
   private token: string | null | undefined;
+  private email: string | null | undefined;
+  private role: string | null | undefined;
   constructor(private http: HttpClient) {
 
 
@@ -27,20 +31,45 @@ export class UserService {
 
   login(user: User): Observable<HttpResponse<AuthenticationResponse>>{
     return this.http.post<AuthenticationResponse>(this.loginUrl, user, {observe: 'response'})
-      .pipe(catchError(this.handleError));
+
+      .pipe(
+        // tap(data  =>{
+        //   console.log(data);
+        //   this.subAuth.next({email: data.body?.email, token: data.body?.token} as AuthenticationDetails);
+        // }),
+        catchError(this.handleError));
   }
 
-
-  loadToken(): void{
-    this.token = localStorage.getItem("jwtToken");
+  saveEmail(email: string): void{
+    localStorage.setItem("email", email);
   }
 
-  loadAuthenticationDetails(auth: AuthenticationDetails): void{
-    this.subEmail.next(auth);
+  saveRole(role: string): void{
+    localStorage.setItem("role", role);
+  }
+
+  loadRole(): void{
+    this.role = localStorage.getItem("role");
+  }
+
+  loadAuthDetails(email: string, token: string, role: string): void{
+    this.subAuth.next({email: email, token: token, role: role});
+  }
+
+  loadEmail(): void{
+    this.email = localStorage.getItem("email");
+  }
+
+  getEmail(){
+    return this.email;
   }
 
   saveToken(token: string){
     localStorage.setItem("jwtToken", token);
+  }
+
+  loadToken(): void{
+    this.token = localStorage.getItem("jwtToken");
   }
 
   getToken(){
@@ -49,6 +78,7 @@ export class UserService {
 
   logOut(): void{
     localStorage.removeItem("jwtToken");
+    localStorage.removeItem("email");
   }
 
   private handleError(error: HttpErrorResponse): Observable<never>{

@@ -13,11 +13,11 @@ export class AuthInterceptor implements HttpInterceptor{
   intercept(request: HttpRequest<any>, handler: HttpHandler): Observable<HttpEvent<any>> {
 
     //daca e pe acest url atunci nu e nevoie sa bagam token-ul in request
-    if(request.url.includes('http://localhost:8080/login')){
+    if(request.url.includes('http://localhost:8080/user/login')){
       return handler.handle(request);
     }
 
-    if(request.url.includes('http://localhost:8080/register')){
+    if(request.url.includes('http://localhost:8080/user/register')){
       return handler.handle(request);
     }
 
