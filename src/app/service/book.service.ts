@@ -13,6 +13,12 @@ export class BookService {
 
   constructor(private http: HttpClient) {}
 
+  getBookById(id: number): Observable<Book>{
+    const url = `${this.baseBooksUrl}/${id}`;
+    return this.http.get<Book>(url)
+      .pipe(catchError(this.handleError));
+  }
+
   getBooks():Observable<Book[]>{
     return this.http.get<Book[]>(this.baseBooksUrl)
       .pipe(catchError(this.handleError));

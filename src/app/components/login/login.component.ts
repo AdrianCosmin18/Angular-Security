@@ -5,6 +5,7 @@ import {User} from "../../models/user";
 import {UserService} from "../../service/user.service";
 import {AuthenticationDetails} from "../../models/authentication-details";
 import {Constants} from "../../models/constants";
+import {AuthorityModel} from "../../models/authority.model";
 
 @Component({
   selector: 'app-login',
@@ -44,12 +45,14 @@ export class LoginComponent implements OnInit {
       next: value => {
         alert("Success login");
 
-        const arrAuth = value.body?.authorities;
+        let arrAuth: Array<AuthorityModel> = value.body?.authorities as Array<AuthorityModel>;
         let role = '';
-        if(arrAuth?.some(auth => auth === Constants.ROLE_ADMIN)){ // problema aici
+        if(arrAuth?.some(elem => elem.authority === Constants.ROLE_ADMIN)){ // problema aici
           role = Constants.ROLE_ADMIN;
+          this.service.subjectIsAdmin.next(true);
         }else{
           role = Constants.ROLE_USER;
+          this.service.subjectIsAdmin.next(false);
         }
 
         this.service.subAuth.next(<AuthenticationDetails>{email: value.body?.email, token: value.body?.token, role: role});

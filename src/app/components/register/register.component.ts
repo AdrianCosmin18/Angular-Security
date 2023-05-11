@@ -6,6 +6,7 @@ import {Router} from "@angular/router";
 import {AuthenticationResponse} from "../../models/authentication-response";
 import {AuthenticationDetails} from "../../models/authentication-details";
 import {Constants} from "../../models/constants";
+import {AuthorityModel} from "../../models/authority.model";
 
 @Component({
   selector: 'app-register',
@@ -46,21 +47,20 @@ export class RegisterComponent implements OnInit {
         if(value.body?.email === user.email){
           alert("Success authentication, now you have to login");
 
-          const arrAuth = value.body?.authorities;
+          let arrAuth: Array<AuthorityModel> = value.body?.authorities as Array<AuthorityModel>;
           let role = '';
-          if(arrAuth?.some(auth => auth === Constants.ROLE_ADMIN)){
+          if(arrAuth?.some(elem => elem.authority === Constants.ROLE_ADMIN)){
             role = Constants.ROLE_ADMIN;
+            this.service.subjectIsAdmin.next(true);
           }else{
             role = Constants.ROLE_USER;
+            this.service.subjectIsAdmin.next(false);
           }
 
           this.service.subAuth.next(<AuthenticationDetails>{email: value.body?.email, token: value.body?.token, role: role});
-
-
           this.service.saveToken(value.body.token);
           this.service.saveEmail(value.body.email);
           this.service.saveRole(role);
-          this.service.subAuth.next(<AuthenticationDetails>{email: value.body?.email, token: value.body?.token});
           this.router.navigate(['/home']);
         }
       },

@@ -13,7 +13,8 @@ export class UserService {
   private registerUrl = "http://localhost:8080/user/register";
   private loginUrl = "http://localhost:8080/user/login";
 
-  public subAuth = new BehaviorSubject<AuthenticationDetails>({email:'', token: '', role: Constants.ROLE_USER});
+  public subAuth = new BehaviorSubject<AuthenticationDetails>({email:'', token: '', role: ''});
+  public subjectIsAdmin = new BehaviorSubject<boolean>(false);
 
   private token: string | null | undefined;
   private email: string | null | undefined;
@@ -79,6 +80,7 @@ export class UserService {
   logOut(): void{
     localStorage.removeItem("jwtToken");
     localStorage.removeItem("email");
+    localStorage.removeItem("role");
   }
 
   private handleError(error: HttpErrorResponse): Observable<never>{

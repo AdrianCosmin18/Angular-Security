@@ -21,33 +21,18 @@ export class AppComponent implements OnInit{
 
     this.loadRole();
 
-    this.items = [
-      {
-        label: 'Available books',
-        icon: 'pi pi-fw pi-book',
-        routerLink: 'home'
-      },
-      {
-        label: 'My books',
-        icon: 'pi pi-fw pi-user',
-        routerLink: 'myBooks'
-      },
-      {
-        label: 'Log out',
-        icon: 'pi pi-fw pi-user',
-        routerLink: 'login'
-      }
-    ];
+    this.items = [];
 
-    if(this.role === Constants.ROLE_ADMIN){
-      this.items.push(
-        {
-          label: 'Create a new book',
-          icon: 'pi pi-fw pi-book',
-          routerLink: 'createBook'
+    this.userService.subjectIsAdmin.subscribe(
+      value => {
+
+        if(value){
+          this.initItemAdmin();
+        }else{
+          this.initItemsUser();
         }
-      );
-    }
+      }
+    )
   }
 
   loadRole(){
@@ -66,4 +51,59 @@ export class AppComponent implements OnInit{
   hasNotRoute(route: string){
     return this.router.url !== route;
   }
+
+  initItemAdmin(): void{
+    this.items = [
+      {
+        label: 'Available books',
+        icon: 'pi pi-fw pi-book',
+        routerLink: 'home'
+      },
+      {
+        label: 'My books',
+        icon: 'pi pi-fw pi-user',
+        routerLink: 'myBooks'
+      },
+      {
+        label: 'Log out',
+        icon: 'pi pi-fw pi-user',
+        command: () => this.logOut()
+      },
+      {
+        label: 'Create a new book',
+        icon: 'pi pi-fw pi-book',
+        routerLink: 'createBook'
+      }
+    ];
+  }
+
+  initItemsUser(): void{
+    this.items = [
+      {
+        label: 'Available books',
+        icon: 'pi pi-fw pi-book',
+        routerLink: 'home'
+      },
+      {
+        label: 'My books',
+        icon: 'pi pi-fw pi-user',
+        routerLink: 'myBooks'
+      },
+      {
+        label: 'Log out',
+        icon: 'pi pi-fw pi-user',
+        command: () => this.logOut()
+      }
+    ];
+  }
+
+
+  logOut(): void{
+    this.userService.logOut();
+    this.router.navigate(['login']);
+  }
+
+
+
+
 }

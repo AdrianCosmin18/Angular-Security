@@ -1,4 +1,6 @@
-<td pTooltip="{{tooltipMessage}}" tooltipPosition="top">{{book.id}}</td>
+<td pTooltip="{{tooltipMessage}}" tooltipPosition="top"
+    [ngClass]="role === 'ROLE_ADMIN' ? 'isAdmin' : 'isUser'"
+    [routerLink]="putUrl()">{{book.id}}</td>
 <td>{{book.name}}</td>
 <td>{{book.author}}</td>
 <td>{{book.numberOfPages}}</td>

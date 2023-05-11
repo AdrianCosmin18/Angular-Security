@@ -19,6 +19,7 @@ import {AuthInterceptor} from "./interceptor/auth.interceptor";
 import { StateComponent } from './components/state/state.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { CreateBookComponent } from './components/create-book/create-book.component';
+import { UpdateBookComponent } from './components/update-book/update-book.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { CreateBookComponent } from './components/create-book/create-book.compon
     BookComponent,
     UserBookComponent,
     StateComponent,
-    CreateBookComponent
+    CreateBookComponent,
+    UpdateBookComponent
   ],
     imports: [
         BrowserModule,

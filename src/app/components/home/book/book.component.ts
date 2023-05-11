@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Book} from "../../../models/book";
 import {Constants} from "../../../models/constants";
+import {UserService} from "../../../service/user.service";
 
 @Component({
   selector: '.book',
@@ -13,12 +14,18 @@ export class BookComponent implements OnInit {
   @Output() addBookById = new EventEmitter<number>();
   @Output() returnBookById = new EventEmitter<number>();
 
-  public tooltipMessage: string = 'Edit book';
+  public role: string = '';
+  public tooltipMessage: string = '';
+  public cursor: string = 'none';
 
-  constructor() { }
+  constructor(private userService: UserService) { }
 
   ngOnInit(): void {
-
+    this.loadRole();
+    if(this.role === Constants.ROLE_ADMIN){
+      this.tooltipMessage = 'Edit book';
+      this.cursor = 'pointer'
+    }
   }
 
   addBookToUser(){
@@ -29,4 +36,21 @@ export class BookComponent implements OnInit {
     this.returnBookById.emit(this.book.id);
   }
 
+
+  loadRole(){
+    this.userService.subAuth.subscribe({
+      next: value => {
+        this.role = value.role;
+        console.log(this.role);
+        if(!this.role){
+          // @ts-ignore
+          this.role = localStorage.getItem("role");
+        }
+      }
+    });
+  }
+
+  putUrl(): string{
+    return String(<number>this.book.id);
+  }
 }
