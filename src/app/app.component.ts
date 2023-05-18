@@ -72,17 +72,15 @@ export class AppComponent implements OnInit{
         routerLink: 'createBook'
       },
       {
-        label: 'Log out',
-        icon: 'pi pi-fw pi-user',
-        command: () => this.logOut()
-      },
-      {
         label: 'All users',
         icon: 'pi pi-fw pi-users',
         routerLink: 'users'
+      },
+      {
+        label: 'Log out',
+        icon: 'pi pi-fw pi-user',
+        command: () => this.logOut()
       }
-
-
     ];
   }
 

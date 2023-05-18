@@ -23,6 +23,8 @@ import { UpdateBookComponent } from './components/update-book/update-book.compon
 import { UsersPageComponent } from './components/users-page/users-page.component';
 import { UserPageItemComponent } from './components/users-page/user-page-item/user-page-item.component';
 import { UserUpdateComponent } from './components/users-page/user-update/user-update.component';
+import {InputTextModule} from "primeng/inputtext";
+import {ConfirmDialogModule} from "primeng/confirmdialog";
 
 @NgModule({
   declarations: [
@@ -39,18 +41,20 @@ import { UserUpdateComponent } from './components/users-page/user-update/user-up
     UserPageItemComponent,
     UserUpdateComponent
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        ReactiveFormsModule,
-        ButtonModule,
-        HttpClientModule,
-        RippleModule,
-        TabMenuModule,
-        MegaMenuModule,
-        ToastModule,
-        BrowserAnimationsModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    ReactiveFormsModule,
+    ButtonModule,
+    HttpClientModule,
+    RippleModule,
+    TabMenuModule,
+    MegaMenuModule,
+    ToastModule,
+    BrowserAnimationsModule,
+    InputTextModule,
+    ConfirmDialogModule
+  ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass:AuthInterceptor, multi: true}
   ],

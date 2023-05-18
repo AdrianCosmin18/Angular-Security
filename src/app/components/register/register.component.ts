@@ -45,25 +45,23 @@ export class RegisterComponent implements OnInit {
     this.service.register(user).subscribe({
       next: value => {
         // const resp = response as AuthenticationResponse;
-        if(value.body?.email === user.email){
-          alert("Success authentication, now you have to login");
+        alert("Success authentication, now you have to login");
 
-          let arrAuth: Array<AuthorityModel> = value.body?.authorities as Array<AuthorityModel>;
-          let role = '';
-          if(arrAuth?.some(elem => elem.authority === Constants.ROLE_ADMIN)){
-            role = Constants.ROLE_ADMIN;
-            this.service.subjectIsAdmin.next(true);
-          }else{
-            role = Constants.ROLE_USER;
-            this.service.subjectIsAdmin.next(false);
-          }
-
-          this.service.subAuth.next(<AuthenticationDetails>{email: value.body?.email, token: value.body?.token, role: role});
-          this.service.saveToken(value.body.token);
-          this.service.saveEmail(value.body.email);
-          this.service.saveRole(role);
-          this.router.navigate(['/home']);
+        let arrAuth: Array<AuthorityModel> = value.body?.authorities as Array<AuthorityModel>;
+        let role = '';
+        if(arrAuth?.some(elem => elem.authority === Constants.ROLE_ADMIN)){
+          role = Constants.ROLE_ADMIN;
+          this.service.subjectIsAdmin.next(true);
+        }else{
+          role = Constants.ROLE_USER;
+          this.service.subjectIsAdmin.next(false);
         }
+
+        this.service.subAuth.next(<AuthenticationDetails>{email: value.body?.email, token: value.body?.token, role: role});
+        this.service.saveToken(value.body!.token);
+        this.service.saveEmail(value.body!.email);
+        this.service.saveRole(role);
+        this.router.navigate(['/home']);
       },
       error: err => {
         alert("Something went wrong");

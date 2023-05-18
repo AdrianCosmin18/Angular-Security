@@ -7,6 +7,7 @@ import {UserBookComponent} from "./components/home/user-book/user-book.component
 import {CreateBookComponent} from "./components/create-book/create-book.component";
 import {UpdateBookComponent} from "./components/update-book/update-book.component";
 import {UsersPageComponent} from "./components/users-page/users-page.component";
+import {UserUpdateComponent} from "./components/users-page/user-update/user-update.component";
 
 const routes: Routes = [
   {path: '', redirectTo: '/register', pathMatch: 'full'},
@@ -16,7 +17,8 @@ const routes: Routes = [
   {path: 'myBooks', component: UserBookComponent},
   {path: 'createBook', component: CreateBookComponent},
   {path: 'home/:id', component: UpdateBookComponent},
-  {path: 'users', component: UsersPageComponent}
+  {path: 'users', component: UsersPageComponent},
+  {path: 'users/:email', component: UserUpdateComponent}
 ];
 
 @NgModule({
