@@ -19,9 +19,12 @@
     </div>
 
     <article class="button-group">
-      <button pButton pRipple label="Create book"
+      <button pButton pRipple label="Modify book"
               (click)="updateBook()"
-              [disabled]="bookForm.invalid"></button>
+              [disabled]="bookForm.invalid || !bookForm.dirty"></button>
+
+      <button pButton pRipple label="Delete book" class="p-button-danger"
+              (click)="deleteBook()"></button>
     </article>
 
   </form>

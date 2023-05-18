@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {environment} from "../../environments/environment";
-import {UserService} from "../service/user.service";
+import {AuthService} from "../service/auth.service";
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor{
 
-  constructor(private service: UserService) { }
+  constructor(private service: AuthService) { }
 
   //se plaseaza intre request si server si intercepteaza astfel
   intercept(request: HttpRequest<any>, handler: HttpHandler): Observable<HttpEvent<any>> {

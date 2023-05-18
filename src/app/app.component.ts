@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {MegaMenuItem} from "primeng/api";
 import {Router} from "@angular/router";
 import {Constants} from "./models/constants";
-import {UserService} from "./service/user.service";
+import {AuthService} from "./service/auth.service";
 
 @Component({
   selector: 'app-root',
@@ -14,7 +14,7 @@ export class AppComponent implements OnInit{
   public items!: MegaMenuItem[];
   private role: string = Constants.ROLE_USER;
 
-  constructor(private router: Router, private userService: UserService) {
+  constructor(private router: Router, private userService: AuthService) {
   }
 
   ngOnInit() {
@@ -27,6 +27,8 @@ export class AppComponent implements OnInit{
       value => {
 
         if(value){
+          this.initItemAdmin();
+        }else if(this.role === Constants.ROLE_ADMIN){
           this.initItemAdmin();
         }else{
           this.initItemsUser();
@@ -65,15 +67,22 @@ export class AppComponent implements OnInit{
         routerLink: 'myBooks'
       },
       {
+        label: 'Create a new book',
+        icon: 'pi pi-fw pi-book',
+        routerLink: 'createBook'
+      },
+      {
         label: 'Log out',
         icon: 'pi pi-fw pi-user',
         command: () => this.logOut()
       },
       {
-        label: 'Create a new book',
-        icon: 'pi pi-fw pi-book',
-        routerLink: 'createBook'
+        label: 'All users',
+        icon: 'pi pi-fw pi-users',
+        routerLink: 'users'
       }
+
+
     ];
   }
 

@@ -3,7 +3,7 @@ import {Book} from "../../../models/book";
 import {MessageService} from "primeng/api";
 import {BookService} from "../../../service/book.service";
 import {Constants} from "../../../models/constants";
-import {UserService} from "../../../service/user.service";
+import {AuthService} from "../../../service/auth.service";
 
 @Component({
   selector: 'app-user-book',
@@ -18,7 +18,7 @@ export class UserBookComponent implements OnInit {
 
 
 
-  constructor(private bookService: BookService, private messageService: MessageService, private userService: UserService) { }
+  constructor(private bookService: BookService, private messageService: MessageService, private userService: AuthService) { }
 
 
   ngOnInit(): void {

@@ -4,7 +4,7 @@ import {BookService} from "../../service/book.service";
 import {HttpErrorResponse} from "@angular/common/http";
 import {MessageService} from "primeng/api";
 import {Constants} from "../../models/constants";
-import {UserService} from "../../service/user.service";
+import {AuthService} from "../../service/auth.service";
 
 @Component({
   selector: 'app-home',
@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit {
   constructor(
     private bookService: BookService,
     private messageService: MessageService,
-    private userService: UserService) { }
+    private userService: AuthService) { }
 
   ngOnInit(): void {
     this.loadEmail();

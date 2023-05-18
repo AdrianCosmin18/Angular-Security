@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {catchError, Observable, pipe, throwError} from "rxjs";
 import {Book} from "../models/book";
-import {UserService} from "./user.service";
 
 @Injectable({
   providedIn: 'root'
@@ -51,6 +50,18 @@ export class BookService {
 
   createBook(book: Book): Observable<void>{
     return this.http.post<void>(this.baseBooksUrl, book)
+      .pipe(catchError(this.handleError));
+  }
+
+  updateBook(bookId: number, book: Book): Observable<void>{
+    let url = `${this.baseUserUrl}/update-book/${bookId}`;
+    return this.http.put<void>(url, book)
+      .pipe(catchError(this.handleError));
+  }
+
+  deleteBook(id: number): Observable<void>{
+    let url = `${this.baseUserUrl}/delete-book/${id}`;
+    return this.http.delete<void>(url)
       .pipe(catchError(this.handleError));
   }
 

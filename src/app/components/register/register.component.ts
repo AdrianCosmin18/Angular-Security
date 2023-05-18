@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {UserService} from "../../service/user.service";
+import {AuthService} from "../../service/auth.service";
 import {User} from "../../models/user";
 import {Router} from "@angular/router";
 import {AuthenticationResponse} from "../../models/authentication-response";
@@ -16,7 +16,7 @@ import {AuthorityModel} from "../../models/authority.model";
 export class RegisterComponent implements OnInit {
   public registerForm!: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private service: UserService, private router: Router) { }
+  constructor(private formBuilder: FormBuilder, private service: AuthService, private router: Router) { }
 
   ngOnInit(): void {
     this.initForm();
@@ -38,7 +38,8 @@ export class RegisterComponent implements OnInit {
       name: this.registerForm.get("userName")?.value,
       email: this.registerForm.get("email")?.value,
       password: this.registerForm.get("password")?.value,
-      phone: this.registerForm.get("phone")?.value
+      phone: this.registerForm.get("phone")?.value,
+      role: ''
     }
 
     this.service.register(user).subscribe({

@@ -1,7 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Book} from "../../../models/book";
 import {Constants} from "../../../models/constants";
-import {UserService} from "../../../service/user.service";
+import {AuthService} from "../../../service/auth.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: '.book',
@@ -18,7 +19,7 @@ export class BookComponent implements OnInit {
   public tooltipMessage: string = '';
   public cursor: string = 'none';
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
     this.loadRole();
@@ -50,7 +51,10 @@ export class BookComponent implements OnInit {
     });
   }
 
-  putUrl(): string{
-    return String(<number>this.book.id);
+  putUrl(): void{
+    if(this.role === Constants.ROLE_ADMIN){
+      this.router.navigate([`home/${String(<number>this.book.id)}`])
+    }
+    // return String(<number>this.book.id);
   }
 }

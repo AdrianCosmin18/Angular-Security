@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {BookService} from "../../service/book.service";
 import {Router} from "@angular/router";
-import {UserService} from "../../service/user.service";
+import {AuthService} from "../../service/auth.service";
 import {Book} from "../../models/book";
 import {MessageService} from "primeng/api";
 
@@ -19,7 +19,7 @@ export class CreateBookComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private bookService: BookService,
-    private userService: UserService,
+    private userService: AuthService,
     private messageService: MessageService,
     private router: Router) { }
 

@@ -20,6 +20,9 @@ import { StateComponent } from './components/state/state.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { CreateBookComponent } from './components/create-book/create-book.component';
 import { UpdateBookComponent } from './components/update-book/update-book.component';
+import { UsersPageComponent } from './components/users-page/users-page.component';
+import { UserPageItemComponent } from './components/users-page/user-page-item/user-page-item.component';
+import { UserUpdateComponent } from './components/users-page/user-update/user-update.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +34,10 @@ import { UpdateBookComponent } from './components/update-book/update-book.compon
     UserBookComponent,
     StateComponent,
     CreateBookComponent,
-    UpdateBookComponent
+    UpdateBookComponent,
+    UsersPageComponent,
+    UserPageItemComponent,
+    UserUpdateComponent
   ],
     imports: [
         BrowserModule,
